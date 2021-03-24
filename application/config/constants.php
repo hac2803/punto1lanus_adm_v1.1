@@ -91,4 +91,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 */
 
 define('SITE_TITLE', 'Punto 1 Lanús');
-define('VERSION', '1.00');
+define('VERSION', '1.1');
