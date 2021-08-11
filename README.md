@@ -7,3 +7,7 @@
 - Se actualiza la versión a 1.1 (config/contants.php)
 - Se agrega la versión de PHP en el Footer
 
+11/08/2021
+- Se cambia el import desde Excel a CSV (Update Masivo de Precios) 
+- Se elimina la librería PHPExcel
+

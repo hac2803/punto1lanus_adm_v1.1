@@ -24,8 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
+$config['base_url'] = 'http://localhost:8888/punto1_adm/';  // Localhost
 // $config['base_url'] = 'https://punto1lanus.com.ar/admin/'; // HostingBaires
-$config['base_url'] = 'https://admin.punto1lanus.com.ar/';  // HostingBaires SubDomain
+// $config['base_url'] = 'https://admin.punto1lanus.com.ar/';  // HostingBaires SubDomain
 
 
 /*

@@ -17,7 +17,7 @@
 					<div class="row">
 						<div class="col-md-2">
 							<label class="btn btn-primary btn-shadow" for="inpFile">
-								<input type="file" name="file" id="inpFile" required accept=".xls, .xlsx" style="display:none">
+								<input type="file" name="file" id="inpFile" required accept=".csv" style="display:none">
 								Seleccionar archivo
 							</label>
 						</div>
@@ -63,7 +63,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<button type="button" id="btnGuardar" class="btn btn-primary btn-shadow" onclick="this.blur();"><span class="fa fa-save"></span> Guardar</button>
-						<a href="<?php echo base_url(); ?>assets/resources/articulos.xlsx" class="btn btn-warning btn-shadow pull-right" onclick="this.blur();"><span class="fa fa-download"></span> Descargar Excel</a>
+						<a href="<?php echo base_url(); ?>assets/resources/articulos.csv" class="btn btn-warning btn-shadow pull-right" onclick="this.blur();"><span class="fa fa-download"></span> Descargar plantilla</a>
 					</div>
 				</div>
 			</div>
@@ -130,7 +130,7 @@
 		var DataTableArticulos = $('#DataTableArticulos').DataTable();
 
 		//////////////////////////////////////////////////////////////////////////////////////////
-		// Selección de archivo Excel
+		// Selección de archivo
 		//////////////////////////////////////////////////////////////////////////////////////////
 		$("#inpFile").change(function() {
 			if (this.files.length > 0) {
@@ -144,30 +144,34 @@
 		//////////////////////////////////////////////////////////////////////////////////////////
 		$("#frmImportar").submit(function() {
 			event.preventDefault();
+			// $("#btnImportar").prop("disabled", true);
 
 			$.ajax({
-				url: "<?php echo base_url(); ?>Mantenimiento/Articulo/import",
+				url: "<?php echo base_url(); ?>Mantenimiento/Articulo/importCSV",
 				method: "POST",
 				data: new FormData(this),
 				contentType: false,
 				cache: false,
 				processData: false,
 				success: function(data) {
+					// console.log(IsJsonString(data));
+					// console.log(data);
+					if (data !== "[]" && IsJsonString(data)) {
+						$.each(JSON.parse(data), function(key, value) {
+							art_codigo = value.art_codigo;
+							art_nombre = value.art_nombre;
+							art_precio_compra = value.art_precio_compra;
+							art_precio_venta = value.art_precio_venta;
 
-					$.each(JSON.parse(data), function(key, value) {
-						art_codigo = value.art_codigo;
-						art_nombre = value.art_nombre;
-						art_precio_compra = value.art_precio_compra;
-						art_precio_venta = value.art_precio_venta;
-
-						// Add row to datatable
-						DataTableArticulos.row.add({
-							"art_codigo": art_codigo,
-							"art_nombre": art_nombre,
-							"art_precio_compra": art_precio_compra,
-							"art_precio_venta": art_precio_venta
-						}).draw();
-					})
+							// Add row to datatable
+							DataTableArticulos.row.add({
+								"art_codigo": art_codigo,
+								"art_nombre": art_nombre,
+								"art_precio_compra": art_precio_compra,
+								"art_precio_venta": art_precio_venta
+							}).draw();
+						})
+					}
 				}
 			})
 
